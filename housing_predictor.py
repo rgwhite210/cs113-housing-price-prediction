@@ -116,6 +116,47 @@ def visualize_model(X, y, model):
     except Exception as e:
         print(f"Error visualizing model: {e}")
 
+def predict_price(model):
+    """
+    Prompts the user to enter a house size and predicts the price.
+    Handles invalid inputs gracefully.
+    """
+    print("\n Housing Price Predictor")
+    print("-" * 40)
+
+    while True:
+        try:
+            user_input = input("\nEnter a house size in sqft (or 'quit' to exit): ")
+
+            # Allow user to exit the loop
+            if user_input.strip().lower() == 'quit':
+                print("Exiting predictor. Goodbye!")
+                break
+
+            # Convert input to float
+            size = float(user_input)
+
+            # Reject negative or zero values
+            if size <= 0:
+                print("Please enter a positive number greater than 0.")
+                continue
+
+            # Reject unrealistically large values
+            if size > 100000:
+                print("Please enter a realistic house size (under 100,000 sqft).")
+                continue
+
+            # Make prediction
+            predicted_price = model.predict([[size]])[0]
+
+            print(f"\n Size entered  : {size:,.0f} sqft")
+            print(f" Predicted Price: ${predicted_price:,.2f}")
+
+        except ValueError:
+            print("Invalid input. Please enter a numeric value (e.g. 1500).")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+
 # Main
 if __name__ == "__main__":
     df = load_data("housing_data.csv")
@@ -124,3 +165,4 @@ if __name__ == "__main__":
         model, X, y = train_model(df)
         if model is not None:
             visualize_model(X, y, model)
+            predict_price(model)
