@@ -50,6 +50,7 @@ def explore_data(df):
         plt.xlabel('Size (sqft)')
         plt.ylabel('Price ($)')
         plt.tight_layout()
+        print("\nClose the plot window to continue...")
         plt.show()
 
     except Exception as e:
@@ -111,6 +112,7 @@ def visualize_model(X, y, model):
         plt.ylabel('Price ($)')
         plt.legend()
         plt.tight_layout()
+        print("\nClose the plot window to continue...")
         plt.show()
 
     except Exception as e:
