@@ -4,8 +4,8 @@ Housing Price Prediction with Linear Regression
 This program loads housing data from a CSV file, visualizes the data,
 trains a linear regression model, and predicts housing prices based on
 user input.
-
-Author: Your Name
+Author: Rachel White
+GitHub Link: https://github.com/rgwhite210/cs113-housing-price-prediction
 Date: 2026
 """
 
@@ -23,14 +23,14 @@ def load_data(filepath):
     """
     try:
         df = pd.read_csv(filepath)
-        print("✅ Data loaded successfully!")
+        print("Data loaded successfully!")
         print(f"   Rows loaded: {len(df)}")
         return df
     except FileNotFoundError:
-        print(f"❌ Error: File '{filepath}' not found.")
+        print(f"Error: File '{filepath}' not found.")
         return None
     except Exception as e:
-        print(f"❌ Unexpected error loading data: {e}")
+        print(f"Unexpected error loading data: {e}")
         return None
 
 
