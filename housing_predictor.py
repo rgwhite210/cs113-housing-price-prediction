@@ -1,12 +1,11 @@
 """
 Housing Price Prediction with Linear Regression
-================================================
 This program loads housing data from a CSV file, visualizes the data,
 trains a linear regression model, and predicts housing prices based on
 user input.
 Author: Rachel White
 GitHub Link: https://github.com/rgwhite210/cs113-housing-price-prediction
-Date: 2026
+Date: March 2026
 """
 
 import pandas as pd
@@ -90,9 +89,38 @@ def train_model(df):
         print(f"Error training model: {e}")
         return None, None, None
 
+def visualize_model(X, y, model):
+    """
+    Displays a scatter plot of the data points along with the regression line.
+    """
+    try:
+        # Generate the regression line
+        regression_line = model.predict(X)
+
+        # Plot
+        plt.figure(figsize=(8, 5))
+
+        # Scatter plot of actual data points
+        plt.scatter(X, y, color='steelblue', alpha=0.7, edgecolors='black', label='Actual Prices')
+
+        # Regression line
+        plt.plot(X, regression_line, color='red', linewidth=2, label='Regression Line')
+
+        plt.title('House Size vs Price with Regression Line')
+        plt.xlabel('Size (sqft)')
+        plt.ylabel('Price ($)')
+        plt.legend()
+        plt.tight_layout()
+        plt.show()
+
+    except Exception as e:
+        print(f"Error visualizing model: {e}")
+
 # Main
 if __name__ == "__main__":
     df = load_data("housing_data.csv")
     if df is not None:
         explore_data(df)
         model, X, y = train_model(df)
+        if model is not None:
+            visualize_model(X, y, model)
