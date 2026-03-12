@@ -56,8 +56,43 @@ def explore_data(df):
     except Exception as e:
         print(f"Error exploring data: {e}")
 
+def train_model(df):
+    """
+    Trains a linear regression model on the housing data.
+    Returns the trained model and the feature/target arrays.
+    """
+    try:
+        # Prepare the data
+        X = df[['Size (sqft)']].values  # Feature (2D array required by sklearn)
+        y = df['Price ($)'].values       # Target
+
+        # Train the model
+        model = LinearRegression()
+        model.fit(X, y)
+
+        # Calculate R² score
+        y_predicted = model.predict(X)
+        r2 = r2_score(y, y_predicted)
+
+        # Display model details
+        print("\nModel Training Complete!")
+        print("-" * 40)
+        print(f"  Coefficient  : ${model.coef_[0]:,.2f} per sqft")
+        print(f"  Intercept    : ${model.intercept_:,.2f}")
+        print(f"  R² Score     : {r2:.4f}")
+        print("\n  Interpretation:")
+        print(f"  → For every 1 sqft increase, price increases by ${model.coef_[0]:,.2f}")
+        print(f"  → R² of {r2:.4f} means the model explains {r2*100:.1f}% of price variation")
+
+        return model, X, y
+
+    except Exception as e:
+        print(f"Error training model: {e}")
+        return None, None, None
+
 # Main
 if __name__ == "__main__":
     df = load_data("housing_data.csv")
     if df is not None:
         explore_data(df)
+        model, X, y = train_model(df)
