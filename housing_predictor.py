@@ -33,8 +33,31 @@ def load_data(filepath):
         print(f"Unexpected error loading data: {e}")
         return None
 
+def explore_data(df):
+    """
+    Displays basic statistics and a scatter plot of the housing data.
+    """
+    try:
+        print("\nBasic Statistics:")
+        print("-" * 40)
+        print(f"  Count : {len(df)}")
+        print(f"  [Size] Min: {df['Size (sqft)'].min():,} | Max: {df['Size (sqft)'].max():,} | Mean: {df['Size (sqft)'].mean():,.0f}")
+        print(f"  [Price] Min: ${df['Price ($)'].min():,} | Max: ${df['Price ($)'].max():,} | Mean: ${df['Price ($)'].mean():,.0f}")
 
-# --- Main ---
+        # Scatter plot
+        plt.figure(figsize=(8, 5))
+        plt.scatter(df['Size (sqft)'], df['Price ($)'], color='steelblue', alpha=0.7, edgecolors='black')
+        plt.title('House Size vs Price')
+        plt.xlabel('Size (sqft)')
+        plt.ylabel('Price ($)')
+        plt.tight_layout()
+        plt.show()
+
+    except Exception as e:
+        print(f"Error exploring data: {e}")
+
+# Main
 if __name__ == "__main__":
     df = load_data("housing_data.csv")
-    print(df)
+    if df is not None:
+        explore_data(df)
